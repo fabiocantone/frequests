@@ -31,7 +31,7 @@ arch_map = {
 
 
 class LibraryManager:
-    # specify specific version of playfulrequests-cgo library
+    # specify specific version of hrequests-cgo library
     BRIDGE_VERSION = '1.'
 
     def __init__(self):
@@ -64,8 +64,8 @@ class LibraryManager:
         return self.check_library()
 
     def download_library(self):
-        print('Downloading playfulrequests-cgo library from daijro/playfulrequests...')
-        # pull release assets from github daijro/playfulrequests
+        print('Downloading hrequests-cgo library from daijro/hrequests...')
+        # pull release assets from github daijro/hrequests
         resp = get('https://api.github.com/repos/daijro/hrequests/releases/latest')
         assets = loads(resp.content)['assets']
         for asset in assets:
