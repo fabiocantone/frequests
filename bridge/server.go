@@ -11,6 +11,7 @@ import (
 	"net/url"
 	"os"
 	"sync"
+	"time"
 
 	http "github.com/bogdanfinn/fhttp"
 	tls_client_cffi "github.com/bogdanfinn/tls-client/cffi_src"
@@ -166,15 +167,63 @@ func main() {
 }
 
 func startServer(port string) {
+	// Check if the port is already in use
+	listener, err := net.Listen("tcp", ":"+port)
+	if err != nil {
+		fmt.Printf("Port %s is already in use. Attempting to close the existing server and restart.\n", port)
+		// Here you can decide to close the existing server and restart it, or exit.
+		// Handle the error as per your requirement.
+		// Note: Implementing the actual closing of the existing server might require inter-process communication or signaling
+		restartServer(port) // Placeholder for restart logic
+		return
+	}
+	defer listener.Close()
+
+	// Setup your HTTP server's routes
 	http.HandleFunc("/request", requestHandler)
 	http.HandleFunc("/multirequest", multiRequestHandler)
 	http.HandleFunc("/ping", pingHandler)
-	err := http.ListenAndServe(":"+port, nil)
+
+	// Start the HTTP server
+	fmt.Printf("Starting server at http://localhost:%s\n", port)
+	err = http.Serve(listener, nil) // Use the existing listener
 	if err != nil {
 		fmt.Printf("Failed to start server: %v\n", err)
 		os.Exit(1)
 	}
 }
+
+func restartServer(port string) {
+	fmt.Println("Attempting to restart the server...")
+
+	if server != nil {
+		// Shutdown the existing server
+		if err := server.Shutdown(nil); err != nil {
+			fmt.Printf("Error shutting down the server: %v\n", err)
+			// Handle error, possibly with os.Exit(1) or similar
+		}
+	}
+
+	// Wait for a short duration before restarting
+	time.Sleep(2 * time.Second)
+
+	// Start a new server instance
+	go func() {
+		server = &http.Server{Addr: ":" + port}
+
+		http.HandleFunc("/request", requestHandler)
+		http.HandleFunc("/multirequest", multiRequestHandler)
+		http.HandleFunc("/ping", pingHandler)
+
+		fmt.Printf("Restarting server on port %s...\n", port)
+		if err := server.ListenAndServe(); err != http.ErrServerClosed {
+			// Handle error
+			fmt.Printf("Failed to restart server: %v\n", err)
+			os.Exit(1)
+		}
+	}()
+}
+
 
 //export StartServer
 func StartServer(port string) {
