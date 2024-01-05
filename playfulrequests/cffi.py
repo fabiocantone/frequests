@@ -56,7 +56,7 @@ class LibraryManager:
         for file in os.listdir(self.parent_path):
             if not file.endswith(self.file_ext):
                 continue
-            if file.startswith(f'playfulrequests-cgo-{self.BRIDGE_VERSION}'):
+            if file.startswith(f'hrequests-cgo-{self.BRIDGE_VERSION}'):
                 return file
             # delete residual files from previous versions
             os.remove(os.path.join(self.parent_path, file))
