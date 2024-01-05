@@ -96,12 +96,16 @@ class LibraryManager:
 
 
 def GetOpenPort() -> int:
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind(("", 0))
-    s.listen(1)
-    port = s.getsockname()[1]
-    s.close()
-    return port
+    while True:
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.bind(("", 0))
+            s.listen(1)
+            port = s.getsockname()[1]
+            s.close()
+            return port
+        except OSError:
+            continue
 
 
 class GoString(ctypes.Structure):
@@ -137,5 +141,3 @@ def destroySession(session_id: str):
 PORT = GetOpenPort()
 print(f"Starting server on port {PORT}")
 start_server(PORT)
-
-start_server()
