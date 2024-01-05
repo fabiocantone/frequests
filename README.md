@@ -1,4 +1,4 @@
-<img src="https://i.imgur.com/r8GcQW1.png" align="center">
+<img src="https://i.imgur.com/4oDFo3x.png" align="center">
 </img>
 
 <h2 align="center">playfulrequest</h2>
