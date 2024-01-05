@@ -118,10 +118,6 @@ libman = LibraryManager()
 library = ctypes.cdll.LoadLibrary(libman.full_path)
 del libman
 
-# Define the argument and return types for exported Go functions
-library.StartServer.argtypes = [GoString]
-library.StartServer.restype = ctypes.c_void_p
-
 library.DestroySession.argtypes = [GoString]
 library.DestroySession.restype = ctypes.c_void_p
 
@@ -132,7 +128,7 @@ def start_server(port: int):
     library.StartServer(go_string_port)
 
 
-def destroySession(session_id: str):
+def destroy_session(session_id: str):
     encoded_session_id = session_id.encode('utf-8')
     library.DestroySession(GoString(encoded_session_id, len(encoded_session_id)))
 

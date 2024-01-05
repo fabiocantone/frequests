@@ -7,7 +7,7 @@ from geventhttpclient import HTTPClient
 from orjson import dumps, loads
 
 import playfulrequests
-from playfulrequests.cffi import PORT, destroySession
+from playfulrequests.cffi import PORT, destroy_session
 
 from .cookies import (
     RequestsCookieJar,
@@ -253,7 +253,7 @@ class TLSClient:
     def close(self):
         if not self._closed:
             self._closed = True
-            destroySession(self._session_id)
+            destroy_session(self._session_id)
             self.server.close()
 
     def __enter__(self):
