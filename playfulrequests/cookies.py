@@ -4,7 +4,7 @@ from http.cookiejar import Cookie, CookieJar
 from typing import Any, MutableMapping, Union
 from urllib.parse import urlparse, urlunparse
 
-import frequests
+import playfulrequests
 
 try:
     import threading
@@ -18,7 +18,7 @@ class MockRequest:
     Mimic a urllib2.Request to get the correct cookie string for the request.
     """
 
-    def __init__(self, request_url: str, request_headers: 'frequests.client.CaseInsensitiveDict'):
+    def __init__(self, request_url: str, request_headers: 'playfulrequests.client.CaseInsensitiveDict'):
         self.request_url = request_url
         self.request_headers = request_headers
         self._new_headers = {}
@@ -438,7 +438,7 @@ def merge_cookies(
 
 def get_cookie_header(
     request_url: str,
-    request_headers: 'frequests.client.CaseInsensitiveDict',
+    request_headers: 'playfulrequests.client.CaseInsensitiveDict',
     cookie_jar: RequestsCookieJar,
 ) -> str:
     r = MockRequest(request_url, request_headers)
@@ -448,7 +448,7 @@ def get_cookie_header(
 
 def extract_cookies_to_jar(
     request_url: str,
-    request_headers: 'frequests.client.CaseInsensitiveDict',
+    request_headers: 'playfulrequests.client.CaseInsensitiveDict',
     cookie_jar: RequestsCookieJar,
     response_headers: dict,
 ) -> RequestsCookieJar:

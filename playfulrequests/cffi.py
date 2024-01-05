@@ -12,7 +12,7 @@ from orjson import loads
 
 root_dir = os.path.abspath(os.path.dirname(__file__))
 
-# map machine architecture to frequests-cgo binary name
+# map machine architecture to playfulrequests-cgo binary name
 arch_map = {
     'amd64': 'amd64',
     'x86_64': 'amd64',
@@ -31,7 +31,7 @@ arch_map = {
 
 
 class LibraryManager:
-    # specify specific version of frequests-cgo library
+    # specify specific version of playfulrequests-cgo library
     BRIDGE_VERSION = '1.'
 
     def __init__(self):
@@ -56,7 +56,7 @@ class LibraryManager:
         for file in os.listdir(self.parent_path):
             if not file.endswith(self.file_ext):
                 continue
-            if file.startswith(f'frequests-cgo-{self.BRIDGE_VERSION}'):
+            if file.startswith(f'playfulrequests-cgo-{self.BRIDGE_VERSION}'):
                 return file
             # delete residual files from previous versions
             os.remove(os.path.join(self.parent_path, file))
@@ -64,8 +64,8 @@ class LibraryManager:
         return self.check_library()
 
     def download_library(self):
-        print('Downloading frequests-cgo library from daijro/frequests...')
-        # pull release assets from github daijro/frequests
+        print('Downloading playfulrequests-cgo library from daijro/playfulrequests...')
+        # pull release assets from github daijro/playfulrequests
         resp = get('https://api.github.com/repos/daijro/hrequests/releases/latest')
         assets = loads(resp.content)['assets']
         for asset in assets:

@@ -1,7 +1,7 @@
 <img src="https://i.imgur.com/r8GcQW1.png" align="center">
 </img>
 
-<h2 align="center">frequests</h2>
+<h2 align="center">playfulrequest</h2>
 <h3 align="center">A fork from Hrequests</h3>
 
 <h4 align="center">
@@ -63,14 +63,14 @@
 Install via pip:
 
 ```bash
-pip install -U frequests[all]
+pip install -U playfulrequests[all]
 python -m playwright install firefox chromium
 ```
 
 Other dependencies will be downloaded on the first import:
 
 ```py
->> > import frequests
+>> > import playfulrequests
 ```
 
 <details>
@@ -79,7 +79,7 @@ Other dependencies will be downloaded on the first import:
 **Ignore the `[all]` option if you don't want headless browsing support:**
 
 ```bash
-pip install -U frequests
+pip install -U playfulrequests
 ```
 
 </details>
@@ -103,7 +103,7 @@ pip install -U frequests
 Here is an example of a simple `get` request:
 
 ```py
->>> resp = frequests.get('https://www.google.com/')
+>>> resp = playfulrequest.get('https://www.google.com/')
 ```
 
 Requests are sent through [bogdanfinn's tls-client](https://github.com/bogdanfinn/tls-client) to spoof the TLS client fingerprint. This is done automatically, and is completely transparent to the user.
@@ -130,10 +130,10 @@ Parameters:
     timeout (float, optional): Timeout in seconds. Defaults to 30.
     proxies (dict, optional): Dictionary of proxies. Defaults to None.
     nohup (bool, optional): Run the request in the background. Defaults to False.
-    <Additionally includes all parameters from `frequests.Session` if a session was not specified>
+    <Additionally includes all parameters from `playfulrequest.Session` if a session was not specified>
 
 Returns:
-    frequests.response.Response: Response object
+    playfulrequest.response.Response: Response object
 ```
 
 </details>
@@ -204,8 +204,8 @@ Get the response headers:
 Creating a new Chrome Session object:
 
 ```py
->>> session = frequests.Session()  # version randomized by default
->>> session = frequests.Session('chrome', version=117)
+>>> session = playfulrequest.Session()  # version randomized by default
+>>> session = playfulrequest.Session('chrome', version=117)
 ```
 
 <details>
@@ -235,8 +235,8 @@ Parameters:
 Browsers can also be created through the `firefox` and `chrome` shortcuts:
 
 ```py
->>> session = frequests.firefox.Session()
->>> session = frequests.chrome.Session()
+>>> session = playfulrequest.firefox.Session()
+>>> session = playfulrequest.chrome.Session()
 ```
 
 <details>
@@ -264,7 +264,7 @@ Parameters:
 `os` can be `'win'`, `'mac'`, or `'lin'`. Default is randomized.
 
 ```py
->>> session = frequests.chrome.Session(os='mac')
+>>> session = playfulrequest.chrome.Session(os='mac')
 ```
 
 This will automatically generate headers based on the browser name and OS:
@@ -285,7 +285,7 @@ By adding more randomization to our headers, we can make our requests appear to 
 
 ### Properties
 
-Here is a simple get request. This is a wrapper around `frequests.get`. The only difference is that the session cookies are updated with each request. Creating sessions are recommended for making multiple requests to the same domain.
+Here is a simple get request. This is a wrapper around `playfulrequest.get`. The only difference is that the session cookies are updated with each request. Creating sessions are recommended for making multiple requests to the same domain.
 
 ```py
 >>> resp = session.get('https://www.google.com/')
@@ -317,7 +317,7 @@ Sessions can also be closed to free memory:
 Alternatively, sessions can be used as context managers:
 
 ```py
-with frequests.Session() as session:
+with playfulrequest.Session() as session:
     resp = session.get('https://www.google.com/')
     print(resp)
 ```
@@ -333,8 +333,8 @@ Similar to Unix's nohup command, `nohup` requests are sent in the background.
 Adding the `nohup=True` keyword argument will return a `LazyTLSRequest` object. This will send the request immediately, but doesn't wait for the response to be ready until an attribute of the response is accessed.
 
 ```py
-resp1 = frequests.get('https://www.google.com/', nohup=True)
-resp2 = frequests.get('https://www.google.com/', nohup=True)
+resp1 = playfulrequest.get('https://www.google.com/', nohup=True)
+resp2 = playfulrequest.get('https://www.google.com/', nohup=True)
 ```
 
 `resp1` and `resp2` are sent concurrently. They will _never_ pause the current thread, unless an attribute of the response is accessed:
@@ -350,17 +350,17 @@ Note: In `nohup`, a new thread is created for each request. For larger scale con
 
 ### Easy Concurrency
 
-You can pass an array/iterator of links to the request methods to send them concurrently. This wraps around [`frequests.map`](https://github.com/daijro/hrequests#map):
+You can pass an array/iterator of links to the request methods to send them concurrently. This wraps around [`playfulrequest.map`](https://github.com/daijro/hrequests#map):
 
 ```py
->>> frequests.get(['https://google.com/', 'https://github.com/'])
+>>> playfulrequest.get(['https://google.com/', 'https://github.com/'])
 (<Response [200]>, <Response [200]>)
 ```
 
 This also works with `nohup`:
 
 ```py
->>> resps = frequests.get(['https://google.com/', 'https://github.com/'], nohup=True)
+>>> resps = playfulrequest.get(['https://google.com/', 'https://github.com/'], nohup=True)
 >>> resps
 (<LazyResponse[Pending]>, <LazyResponse[Pending]>)
 >>> # Sometime later...
@@ -389,15 +389,15 @@ Parameters:
     verify (bool, optional): Verify the server's TLS certificate. Defaults to True.
     timeout (float, optional): Timeout in seconds. Defaults to 30.
     proxies (dict, optional): Dictionary of proxies. Defaults to None.
-    <Additionally includes all parameters from `frequests.Session` if a session was not specified>
+    <Additionally includes all parameters from `playfulrequest.Session` if a session was not specified>
 
 Returns:
-    frequests.response.Response: Response object
+    playfulrequest.response.Response: Response object
 ```
 
 </details>
 
-Async requests are evaluated on `frequests.map`, `frequests.imap`, or `frequests.imap_enum`.
+Async requests are evaluated on `playfulrequest.map`, `playfulrequest.imap`, or `playfulrequest.imap_enum`.
 
 This functionality is similar to [grequests](https://github.com/spyoungtech/grequests). Unlike grequests, [monkey patching](https://www.gevent.org/api/gevent.monkey.html) is not required because this does not rely on the standard python SSL library.
 
@@ -405,9 +405,9 @@ Create a set of unsent Requests:
 
 ```py
 >>> reqs = [
-...     frequests.async_get('https://www.google.com/', browser='firefox'),
-...     frequests.async_get('https://www.duckduckgo.com/'),
-...     frequests.async_get('https://www.yahoo.com/')
+...     playfulrequest.async_get('https://www.google.com/', browser='firefox'),
+...     playfulrequest.async_get('https://www.duckduckgo.com/'),
+...     playfulrequest.async_get('https://www.yahoo.com/')
 ... ]
 ```
 
@@ -416,7 +416,7 @@ Create a set of unsent Requests:
 Send them all at the same time using map:
 
 ```py
->>> frequests.map(reqs, size=3)
+>>> playfulrequest.map(reqs, size=3)
 [<Response [200]>, <Response [200]>, <Response [200]>]
 ```
 
@@ -442,7 +442,7 @@ Returns:
 `imap` returns a generator that yields responses as they come in:
 
 ```py
->>> for resp in frequests.imap(reqs, size=3):
+>>> for resp in playfulrequest.imap(reqs, size=3):
 ...    print(resp)
 <Response [200]>
 <Response [200]>
@@ -469,7 +469,7 @@ Yields:
 `imap_enum` returns a generator that yields a tuple of `(index, response)` as they come in. The `index` is the index of the request in the original list:
 
 ```py
->>> for index, resp in frequests.imap_enum(reqs, size=3):
+>>> for index, resp in playfulrequest.imap_enum(reqs, size=3):
 ...     print(index, resp)
 (1, <Response [200]>)
 (0, <Response [200]>)
@@ -505,17 +505,17 @@ To handle timeouts or any other exception during the connection of the request, 
 ...    return f'Response failed: {exception}'
 
 >>> bad_reqs = [
-...     frequests.async_get('http://httpbin.org/delay/5', timeout=1),
-...     frequests.async_get('http://fakedomain/'),
-...     frequests.async_get('http://example.com/'),
+...     playfulrequest.async_get('http://httpbin.org/delay/5', timeout=1),
+...     playfulrequest.async_get('http://fakedomain/'),
+...     playfulrequest.async_get('http://example.com/'),
 ... ]
->>> frequests.map(bad_reqs, size=3, exception_handler=exception_handler)
+>>> playfulrequest.map(bad_reqs, size=3, exception_handler=exception_handler)
 ['Response failed: Connection error', 'Response failed: Connection error', <Response [200]>]
 ```
 
 The value returned by the exception handler will be used in place of the response in the result list.
 
-If an exception handler isn't specified, the default yield type is `frequests.FailedResponse`.
+If an exception handler isn't specified, the default yield type is `playfulrequest.FailedResponse`.
 
 <hr width=50>
 
@@ -674,7 +674,7 @@ Only Firefox supports CloudFlare WAFs.
 You can spawn a `BrowserSession` instance by calling it:
 
 ```py
->>> page = frequests.BrowserSession()  # headless=True by default
+>>> page = playfulrequest.BrowserSession()  # headless=True by default
 ```
 
 <details>
@@ -683,8 +683,8 @@ You can spawn a `BrowserSession` instance by calling it:
 ```
 Parameters:
     headless (bool, optional): Whether to run the browser in headless mode. Defaults to True.
-    session (frequests.session.TLSSession, optional): Session to use for headers, cookies, etc.
-    resp (frequests.response.Response, optional): Response to update with cookies, headers, etc.
+    session (playfulrequest.session.TLSSession, optional): Session to use for headers, cookies, etc.
+    resp (playfulrequest.response.Response, optional): Response to update with cookies, headers, etc.
     proxy_ip (str, optional): Proxy to use for the browser. Example: 123.123.123
     mock_human (bool, optional): Whether to emulate human behavior. Defaults to False.
     browser (Literal['firefox', 'chrome'], optional): Generate useragent headers for a specific browser
@@ -699,7 +699,7 @@ By default, `BrowserSession` returns a Chrome browser.
 To create a Firefox session, use the chrome shortcut instead:
 
 ```py
->>> page = frequests.firefox.BrowserSession()
+>>> page = playfulrequest.firefox.BrowserSession()
 ```
 
 `BrowserSession` is entirely safe to use across threads.
@@ -714,23 +714,23 @@ Once the page is closed, the Response content and the Response's session cookies
 
 Rendered browser sessions will use the browser set in the initial request.
 
-You can set a request's browser with the `browser` parameter in the `frequests.get` method:
+You can set a request's browser with the `browser` parameter in the `playfulrequest.get` method:
 
 ```py
->>> resp = frequests.get('https://example.com', browser='chrome')
+>>> resp = playfulrequest.get('https://example.com', browser='chrome')
 ```
 
-Or by setting the `browser` parameter of the `frequests.Session` object:
+Or by setting the `browser` parameter of the `playfulrequest.Session` object:
 
 ```py
->>> session = frequests.Session(browser='chrome')
+>>> session = playfulrequest.Session(browser='chrome')
 >>> resp = session.get('https://example.com')
 ```
 
 **Example - submitting a login form:**
 
 ```py
->>> session = frequests.Session(browser='chrome')
+>>> session = playfulrequest.Session(browser='chrome')
 >>> resp = session.get('https://www.somewebsite.com/')
 >>> with resp.render(mock_human=True) as page:
 ...     page.type('.input#username', 'myuser')
@@ -742,7 +742,7 @@ Or by setting the `browser` parameter of the `frequests.Session` object:
 <summary><strong>Or, without a context manager</strong></summary>
 
 ```py
->>> session = frequests.Session(browser='chrome')
+>>> session = playfulrequest.Session(browser='chrome')
 >>> resp = session.get('https://www.somewebsite.com/')
 >>> page = resp.render(mock_human=True)
 >>> page.type('.input#username', 'myuser')
@@ -937,7 +937,7 @@ Parameters:
     check (bool, optional): Check if an element is draggable before running. Defaults to False.
 
 Throws:
-    frequests.exceptions.BrowserTimeoutException: If timeout is reached
+    playfulrequest.exceptions.BrowserTimeoutException: If timeout is reached
 ```
 
 </details>
@@ -992,7 +992,7 @@ Parameters:
     timeout (float, optional): Timeout in seconds. Defaults to 30.
 
 Throws:
-    frequests.exceptions.BrowserTimeoutException: If timeout is reached
+    playfulrequest.exceptions.BrowserTimeoutException: If timeout is reached
 ```
 
 </details>
@@ -1013,7 +1013,7 @@ Parameters:
     timeout (float, optional): Timeout in seconds. Defaults to 30.
 
 Throws:
-    frequests.exceptions.BrowserTimeoutException: If timeout is reached
+    playfulrequest.exceptions.BrowserTimeoutException: If timeout is reached
 ```
 
 </details>
@@ -1033,7 +1033,7 @@ Parameters:
     timeout (float, optional): Timeout in seconds. Defaults to 30.
 
 Throws:
-    frequests.exceptions.BrowserTimeoutException: If timeout is reached
+    playfulrequest.exceptions.BrowserTimeoutException: If timeout is reached
 ```
 
 </details>
@@ -1055,7 +1055,7 @@ Parameters:
     timeout (float, optional): Timeout in seconds. Defaults to 30.
 
 Throws:
-    frequests.exceptions.BrowserTimeoutException: If timeout is reached
+    playfulrequest.exceptions.BrowserTimeoutException: If timeout is reached
 ```
 
 </details>
@@ -1077,7 +1077,7 @@ Parameters:
     timeout (float, optional): Timeout in seconds. Defaults to 30.
 
 Throws:
-    frequests.exceptions.BrowserTimeoutException: If timeout is reached
+    playfulrequest.exceptions.BrowserTimeoutException: If timeout is reached
 ```
 
 </details>
@@ -1123,7 +1123,7 @@ If you plan on using Firefox-specific or Chrome-specific extensions, make sure t
 
 ```py
 # when dealing with captchas, make sure to use firefox
->>> resp = frequests.get('https://accounts.hcaptcha.com/demo', browser='firefox')
+>>> resp = playfulrequest.get('https://accounts.hcaptcha.com/demo', browser='firefox')
 ```
 
 Extensions are added with the `extensions` parameter:
@@ -1143,7 +1143,7 @@ Extensions are added with the `extensions` parameter:
 Here is an usage example of using a captcha solver:
 
 ```py
->>> resp = frequests.get('https://accounts.hcaptcha.com/demo', browser='firefox')
+>>> resp = playfulrequest.get('https://accounts.hcaptcha.com/demo', browser='firefox')
 >>> with resp.render(extensions=['C:\\extensions\\hektcaptcha']) as page:
 ...     page.awaitSelector('.hcaptcha-success')  # wait for captcha to finish
 ...     page.click('input[type=submit]')
@@ -1151,7 +1151,7 @@ Here is an usage example of using a captcha solver:
 
 ### Requests & Responses
 
-Requests can also be sent within browser sessions. These operate the same as the standard `frequests.request`, and will use the browser's cookies and headers. The `BrowserSession` cookies will be updated with each request.
+Requests can also be sent within browser sessions. These operate the same as the standard `playfulrequest.request`, and will use the browser's cookies and headers. The `BrowserSession` cookies will be updated with each request.
 
 This returns a normal `Response` object:
 
@@ -1175,10 +1175,10 @@ Parameters:
     max_redirects (int, optional): Maximum number of redirects to follow. Defaults to None.
 
 Throws:
-    frequests.exceptions.BrowserTimeoutException: If timeout is reached
+    playfulrequest.exceptions.BrowserTimeoutException: If timeout is reached
 
 Returns:
-    frequests.response.Response: Response object
+    playfulrequest.response.Response: Response object
 ```
 
 </details>
@@ -1219,7 +1219,7 @@ You can use `.render` to spawn a `BrowserSession` object directly from a url:
 # Using a Session:
 >>> page = session.render('https://google.com')
 # Or without a session at all:
->>> page = frequests.render('https://google.com')
+>>> page = playfulrequest.render('https://google.com')
 ```
 
 Make sure to close all `BrowserSession` objects when done!

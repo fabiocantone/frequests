@@ -6,8 +6,8 @@ from urllib.parse import urlencode
 from geventhttpclient import HTTPClient
 from orjson import dumps, loads
 
-import frequests
-from frequests.cffi import PORT, destroySession
+import playfulrequests
+from playfulrequests.cffi import PORT, destroySession
 
 from .cookies import (
     RequestsCookieJar,
@@ -392,7 +392,7 @@ class TLSClient:
             response_headers=response_object['headers'],
         )
         # build response class
-        return frequests.response.build_response(response_object, response_cookie_jar)
+        return playfulrequests.response.build_response(response_object, response_cookie_jar)
 
     def build_response(
         self,

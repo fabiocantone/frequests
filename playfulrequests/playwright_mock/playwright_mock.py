@@ -4,9 +4,9 @@ from typing import Dict, List, Tuple
 from async_class import AsyncObject
 from playwright.async_api import async_playwright
 
-from frequests.extensions import LoadFirefoxAddon
-from frequests.playwright_mock import Faker, ProxyManager, context
-from frequests.cffi import GetOpenPort
+from playfulrequests.extensions import LoadFirefoxAddon
+from playfulrequests.playwright_mock import Faker, ProxyManager, context
+from playfulrequests.cffi import GetOpenPort
 
 
 class PlaywrightMockBase(AsyncObject):

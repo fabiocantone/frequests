@@ -10,8 +10,8 @@ from urllib.parse import urlencode
 import gevent
 from gevent.pool import Pool
 
-import frequests
-from frequests.response import Response
+import playfulrequests
+from playfulrequests.response import Response
 
 
 class TLSRequest:
@@ -22,7 +22,7 @@ class TLSRequest:
     Args:
         method (str): Request method.
         url (str): URL to request.
-        session (frequests.session.TLSSession, optional): Associated `TLSSession`. Defaults to None.
+        session (playfulrequests.session.TLSSession, optional): Associated `TLSSession`. Defaults to None.
         raise_exception (bool, optional): Raise exceptions (default FALSE for async, TRUE for sync). Defaults to False.
         params (Dict[str, str], optional): Parameters to pass to request. Defaults to None.
         callback (function, optional): Callback called on response. Same as passing ``hooks={'response': callback}``. Defaults to None.
@@ -31,9 +31,9 @@ class TLSRequest:
         method (str): Request method.
         raise_exception (bool): Raise exceptions (default FALSE for async, TRUE for sync).
         url (str): URL to request.
-        session (frequests.session.TLSSession): Associated `TLSSession`.
+        session (playfulrequest.session.TLSSession): Associated `TLSSession`.
         kwargs (dict): The rest arguments for ``Session.request``.
-        response (frequests.response.Response): Resulting ``Response``.
+        response (playfulrequest.response.Response): Resulting ``Response``.
 
     Methods:
         send(**kwargs): Prepares request based on parameter passed to constructor and optional ``kwargs```.
@@ -60,7 +60,7 @@ class TLSRequest:
         self,
         method: str,
         url: str,
-        session: Optional['frequests.session.TLSSession'] = None,
+        session: Optional['playfulrequests.session.TLSSession'] = None,
         params: Optional[Dict[str, str]] = None,
         raise_exception: bool = True,
         **kwargs,
@@ -99,10 +99,10 @@ class TLSRequest:
         if session is None:
             if self.sess_kwargs:
                 # if session kwargs are passed, configure a new session with them
-                self.session = frequests.Session(temp=True, **self.sess_kwargs)
+                self.session = playfulrequests.Session(temp=True, **self.sess_kwargs)
             else:
                 # else use a preconfigured session
-                self.session = frequests.chrome.Session(temp=True)
+                self.session = playfulrequests.chrome.Session(temp=True)
             self._close = True
         else:
             # don't close adapters after each request if the user provided the session
@@ -229,7 +229,7 @@ def request(method: str, url: Union[str, Iterable[str]], *args, **kwargs):
         threadsafe (bool, optional): Threadsafe support for wait=False. Defaults to False.
 
     Returns:
-        frequests.response.Response: Response object
+        playfulrequest.response.Response: Response object
     '''
     # if a list of urls is passed, send requests concurrently
     if isinstance(url, (list, tuple)):
@@ -345,7 +345,7 @@ def map(
         size = len(requests)
 
     for inc in range(0, len(requests), size):
-        processed_reqs: List[frequests.response.ProcessResponse] = []
+        processed_reqs: List[playfulrequests.response.ProcessResponse] = []
         requests_range = requests[inc : min(inc + size, len(requests))]
         for req in requests_range:
             # prepare the request & construct sessions
@@ -356,7 +356,7 @@ def map(
                 req.session.request(req.method, req.url, **req.kwargs, process=False)
             )
         try:
-            resps: List[Optional[Response]] = frequests.response.ProcessResponsePool(
+            resps: List[Optional[Response]] = playfulrequests.response.ProcessResponsePool(
                 processed_reqs
             ).execute_pool()
         except Exception as e:

@@ -3,9 +3,9 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
-name = "frequests"
+name = "PlayfulRequests"
 version = "0.8.0-beta"
-description = "Frequests (human requests) is a simple, configurable, feature-rich, replacement for the Python requests library. This is a fork of frequests."
+description = "PlayfulRequests (human requests) is a simple, configurable, feature-rich, replacement for the Python requests library. This is a fork of hrequests."
 authors = ["fabiocan <fabio@cantone.me>"]
 license = "Apache-2.0"
 readme = "README.md"

@@ -3,10 +3,10 @@ from random import choice as rchoice
 from sys import modules, stderr
 from typing import Literal, Optional, Tuple, Union
 
-import frequests
-from frequests.headers import Headers
-from frequests.reqs import *
-from frequests.response import ProcessResponse
+import playfulrequests
+from playfulrequests.headers import Headers
+from playfulrequests.reqs import *
+from playfulrequests.response import ProcessResponse
 
 from .client import TLSClient
 from .cookies import RequestsCookieJar
@@ -126,7 +126,7 @@ class TLSSession(TLSClient):
     def render(self, *args, **kwargs):
         # shortcut to render method
         if 'playwright' in modules:
-            return frequests.browser.render(*args, **kwargs, session=self, browser=self.browser)
+            return playfulrequests.browser.render(*args, **kwargs, session=self, browser=self.browser)
         else:
             stderr.write('Cannot render. Playwright not installed.\n')
 
@@ -146,7 +146,7 @@ class TLSSession(TLSClient):
         timeout: Optional[float] = None,
         proxies: Optional[dict] = None,
         process: bool = True,
-    ) -> 'frequests.response.Response':
+    ) -> 'playfulrequests.response.Response':
         """
         Send a request with TLS client
 
@@ -165,7 +165,7 @@ class TLSSession(TLSClient):
             proxies (dict, optional): Dictionary of proxies. Defaults to None.
 
         Returns:
-            frequests.response.Response: Response object
+            playfulrequest.response.Response: Response object
         """
         proc = ProcessResponse(
             session=self,
@@ -266,7 +266,7 @@ class SessionShortcut:
         cls,
         **kwargs,
     ):
-        return frequests.browser.BrowserSession(
+        return playfulrequests.browser.BrowserSession(
             browser=cls.name,
             **kwargs,
         )

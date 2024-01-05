@@ -8,8 +8,8 @@ import selectolax.lexbor
 from parse import Result, findall
 from parse import search as parse_search
 
-import frequests
-from frequests.exceptions import NotRenderedException, SelectorNotFoundException
+import playfulrequests
+from playfulrequests.exceptions import NotRenderedException, SelectorNotFoundException
 
 """
 Parser structure inspired by https://github.com/psf/requests-html/blob/master/requests_html.py
@@ -406,14 +406,14 @@ class HTML(BaseParser):
         html (Optional[_HTML]): HTML from which to base the parsing upon.
 
     Attributes:
-        session (Union[frequests.session.TLSSession, frequests.browser.BrowserSession]): The session used for the HTML request.
+        session (Union[playfulrequest.session.TLSSession, playfulrequest.browser.BrowserSession]): The session used for the HTML request.
     """
 
     def __init__(
         self,
         *,
         session: Optional[
-            Union['frequests.session.TLSSession', 'frequests.browser.BrowserSession']
+            Union['playfulrequests.session.TLSSession', 'playfulrequests.browser.BrowserSession']
         ] = None,
         url: str = DEFAULT_URL,
         html: _HTML,
@@ -424,13 +424,13 @@ class HTML(BaseParser):
             element=element,
             url=url,
             br_session=weakref.proxy(session)
-            if hasattr(frequests, 'browser')  # if the browser module is imported
+            if hasattr(playfulrequests, 'browser')  # if the browser module is imported
                and isinstance(
-                session, frequests.browser.BrowserSession
+                session, playfulrequests.browser.BrowserSession
             )  # and session is a BrowserSession
             else None,
         )
-        self.session = session or frequests.firefox.Session(temp=True)
+        self.session = session or playfulrequests.firefox.Session(temp=True)
         self.page = None
         self.next_symbol = DEFAULT_NEXT_SYMBOL
 
