@@ -46,7 +46,7 @@ class ProxyManager(AsyncObject):
             {"http": self.http_proxy, "https": self.http_proxy} if self.proxy else None
         )
 
-        self.phttpx = httpx.AsyncClient(proxies={"all://": self.plain_proxy})
+        self.phttpx = httpx.AsyncClient(proxies={"http://": self.plain_proxy})
         self.httpx = httpx.AsyncClient()
 
         await self.check_proxy()

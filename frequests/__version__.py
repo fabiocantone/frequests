@@ -1,4 +1,4 @@
-__title__ = "hrequests"
+__title__ = "frequests"
 __description__ = "Webscraping for humans"
 __version__ = "0.8.0-beta"
 __author__ = "daijro"

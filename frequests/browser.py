@@ -8,19 +8,19 @@ from aioprocessing import Queue
 from playwright._impl._api_types import Error as PlaywrightError
 from playwright._impl._api_types import TimeoutError as PlaywrightTimeoutError
 
-import hrequests
-from hrequests.client import CaseInsensitiveDict
-from hrequests.cookies import cookiejar_to_list, list_to_cookiejar
-from hrequests.exceptions import BrowserException, BrowserTimeoutException, JavascriptException
-from hrequests.headers import Headers
-from hrequests.response import Response
+import frequests
+from frequests.client import CaseInsensitiveDict
+from frequests.cookies import cookiejar_to_list, list_to_cookiejar
+from frequests.exceptions import BrowserException, BrowserTimeoutException, JavascriptException
+from frequests.headers import Headers
+from frequests.response import Response
 
 from .cookies import RequestsCookieJar
 from .extensions import BuildExtensions, Extension, load_chrome_exts
 
 _browsers = {
-    'firefox': hrequests.FirefoxBrowser,
-    'chrome': hrequests.ChromeBrowser,
+    'firefox': frequests.FirefoxBrowser,
+    'chrome': frequests.ChromeBrowser,
 }
 
 
@@ -28,8 +28,8 @@ class BrowserSession:
     """
     Args:
         headless (bool, optional): Whether to run the browser in headless mode. Defaults to True.
-        session (hrequests.session.TLSSession, optional): Session to use for headers, cookies, etc.
-        resp (hrequests.response.Response, optional): Response to update with cookies, headers, etc.
+        session (frequests.session.TLSSession, optional): Session to use for headers, cookies, etc.
+        resp (frequests.response.Response, optional): Response to update with cookies, headers, etc.
         proxy_ip (str, optional): Proxy to use for the browser. Example: 123.123.123
         mock_human (bool, optional): Whether to emulate human behavior. Defaults to False.
         browser (Literal['firefox', 'chrome'], optional): Generate useragent headers for a specific browser
@@ -77,8 +77,8 @@ class BrowserSession:
         self,
         *,
         headless: bool = True,
-        session: Optional[hrequests.session.TLSSession] = None,
-        resp: Optional[hrequests.response.Response] = None,
+        session: Optional[frequests.session.TLSSession] = None,
+        resp: Optional[frequests.response.Response] = None,
         proxy_ip: Optional[str] = None,
         mock_human: bool = False,
         browser: Optional[Literal['firefox', 'chrome']] = None,
@@ -91,8 +91,8 @@ class BrowserSession:
         # _out is for responses from the asyncio loop
         self._out: Queue = Queue()
         # remember session and resp to clone cookies back to when closing
-        self.session: Optional[hrequests.session.TLSSession] = session
-        self.resp: Optional[hrequests.response.Response] = resp
+        self.session: Optional[frequests.session.TLSSession] = session
+        self.resp: Optional[frequests.response.Response] = resp
         # use the passed browser
         self.browser: Literal['firefox', 'chrome'] = browser or 'firefox'
         # generating headers
@@ -476,9 +476,9 @@ class BrowserSession:
         self.setCookies(cookiejar)
 
     @property
-    def html(self) -> 'hrequests.parser.HTML':
+    def html(self) -> 'frequests.parser.HTML':
         '''Get the page html as an HTML object'''
-        return hrequests.parser.HTML(
+        return frequests.parser.HTML(
             session=self, url=self.url, html=self.content
         )
 
@@ -623,8 +623,8 @@ def render(
     url: str = None,
     headless: bool = True,
     proxy: dict = None,
-    response: hrequests.response.Response = None,
-    session: hrequests.session.TLSSession = None,
+    response: frequests.response.Response = None,
+    session: frequests.session.TLSSession = None,
     mock_human: bool = False,
     extensions: Optional[Union[str, Iterable[str]]] = None,
     browser: Optional[Literal['firefox', 'chrome']] = None,
@@ -645,7 +645,7 @@ def render(
         browser=browser,
     )
     # include headers from session if a TLSSession is provided
-    if session and isinstance(session, hrequests.session.TLSSession):
+    if session and isinstance(session, frequests.session.TLSSession):
         render_session.setHeaders(session.headers)
     # include merged cookies from session or from response
     if req_src := session or response:

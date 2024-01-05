@@ -13,7 +13,7 @@ except ModuleNotFoundError:
 
     # give windows users a warning
     os.name == 'nt' and stderr.write(
-        'WARNING: Please run `pip install hrequests[all]` for headless browsing support.\n'
+        'WARNING: Please run `pip install frequests[all]` for headless browsing support.\n'
     )
 
 from .parser import HTML

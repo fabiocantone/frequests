@@ -12,7 +12,7 @@ import orjson
 Fake header generator
 
 Usage:
->>> from hrequests import Headers
+>>> from frequests import Headers
 >>> h = Headers(os='win', browser='chrome')
 >>> h.generate()
 '''

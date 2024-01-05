@@ -3,13 +3,13 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
-name = "hrequests"
+name = "frequests"
 version = "0.8.0-beta"
-description = "Hrequests (human requests) is a simple, configurable, feature-rich, replacement for the Python requests library."
-authors = ["daijro <daijro.dev@gmail.com>"]
+description = "Frequests (human requests) is a simple, configurable, feature-rich, replacement for the Python requests library. This is a fork of frequests."
+authors = ["fabiocantone <fabio@cantone.me>"]
 license = "Apache-2.0"
 readme = "README.md"
-repository = "https://github.com/daijro/hrequests"
+repository = "https://github.com/fabiocantone/frequests"
 documentation = "https://daijro.gitbook.io/hrequests/"
 keywords = [
     "tls",

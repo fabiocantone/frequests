@@ -1,0 +1,62 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="Annotator" enabled="false" level="ERROR" enabled_by_default="false" />
+    <inspection_tool class="DuplicatedCode" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <Languages>
+        <language minSize="52" name="Python" />
+      </Languages>
+    </inspection_tool>
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="24">
+            <item index="0" class="java.lang.String" itemvalue="httpx" />
+            <item index="1" class="java.lang.String" itemvalue="watchfiles" />
+            <item index="2" class="java.lang.String" itemvalue="price-parser" />
+            <item index="3" class="java.lang.String" itemvalue="bigjson" />
+            <item index="4" class="java.lang.String" itemvalue="python-dateutil" />
+            <item index="5" class="java.lang.String" itemvalue="ijson" />
+            <item index="6" class="java.lang.String" itemvalue="aiofiles" />
+            <item index="7" class="java.lang.String" itemvalue="discord-webhook" />
+            <item index="8" class="java.lang.String" itemvalue="rethinkdb" />
+            <item index="9" class="java.lang.String" itemvalue="asyncgelf" />
+            <item index="10" class="java.lang.String" itemvalue="loguru" />
+            <item index="11" class="java.lang.String" itemvalue="mysql-connector-python" />
+            <item index="12" class="java.lang.String" itemvalue="simplejson" />
+            <item index="13" class="java.lang.String" itemvalue="pandas" />
+            <item index="14" class="java.lang.String" itemvalue="watchdog" />
+            <item index="15" class="java.lang.String" itemvalue="discord" />
+            <item index="16" class="java.lang.String" itemvalue="elasticsearch" />
+            <item index="17" class="java.lang.String" itemvalue="asyncio" />
+            <item index="18" class="java.lang.String" itemvalue="textdistance" />
+            <item index="19" class="java.lang.String" itemvalue="aiomysql" />
+            <item index="20" class="java.lang.String" itemvalue="pendulum" />
+            <item index="21" class="java.lang.String" itemvalue="Pillow" />
+            <item index="22" class="java.lang.String" itemvalue="NCS_Scraper" />
+            <item index="23" class="java.lang.String" itemvalue="playwright_client" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyStubPackagesAdvertiser" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="pika-stubs==0.1.3" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="rethinkdb.RethinkDB.table" />
+          <option value="rethinkdb.RethinkDB.row" />
+          <option value="typing.Coroutine.strip" />
+          <option value="stealthbot.json_finder.search" />
+          <option value="tuple.choices" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="SqlDialectInspection" enabled="true" level="INFORMATION" enabled_by_default="true" />
+  </profile>
+</component>

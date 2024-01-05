@@ -7,9 +7,9 @@ from typing import Callable, Iterable, List, Literal, Optional, Union
 
 from orjson import dumps, loads
 
-import hrequests
-from hrequests.cffi import PORT
-from hrequests.exceptions import ClientException
+import frequests
+from frequests.cffi import PORT
+from frequests.exceptions import ClientException
 
 from .cookies import RequestsCookieJar
 from .toolbelt import CaseInsensitiveDict, FileUtils
@@ -25,7 +25,7 @@ class ProcessResponse:
         cookies: Optional[Union[RequestsCookieJar, dict, list]] = None,
         **kwargs,
     ) -> None:
-        self.session: 'hrequests.session.TLSSession' = session
+        self.session: 'frequests.session.TLSSession' = session
         self.method: str = method
         self.url: str = url
 
@@ -128,12 +128,12 @@ class Response:
         content (Union[str, bytes]): Response body as bytes or str
         ok (bool): True if status code is less than 400
         elapsed (datetime.timedelta): Time elapsed between sending the request and receiving the response
-        html (hrequests.parser.HTML): Response body as HTML parser object
+        html (frequests.parser.HTML): Response body as HTML parser object
     """
 
     url: str
     status_code: int
-    headers: 'hrequests.client.CaseInsensitiveDict'
+    headers: 'frequests.client.CaseInsensitiveDict'
     cookies: RequestsCookieJar
     _text: Optional[str] = None
     _content: Optional[Union[str, bytes]] = None
@@ -141,7 +141,7 @@ class Response:
     # set by ProcessResponse
     history: Optional[List['Response']] = None
     session: Optional[
-        Union['hrequests.session.TLSSession', 'hrequests.browser.BrowserSession']
+        Union['frequests.session.TLSSession', 'frequests.browser.BrowserSession']
     ] = None
     browser: Optional[Literal['firefox', 'chrome']] = None
     elapsed: Optional[timedelta] = None
@@ -175,9 +175,9 @@ class Response:
         return self._text
 
     @property
-    def html(self) -> 'hrequests.parser.HTML':
+    def html(self) -> 'frequests.parser.HTML':
         if not self.__dict__.get('_html'):
-            self._html = hrequests.parser.HTML(
+            self._html = frequests.parser.HTML(
                 session=self.session, url=self.url, html=self.content
             )
         return self._html
@@ -219,8 +219,8 @@ class Response:
         headless: bool = True,
         mock_human: bool = False,
         extensions: Optional[Union[str, Iterable[str]]] = None,
-    ) -> 'hrequests.browser.BrowserSession':
-        return hrequests.browser.render(
+    ) -> 'frequests.browser.BrowserSession':
+        return frequests.browser.render(
             response=self,
             session=self.session,
             proxy=self.session.proxies if self.session else None,
@@ -282,7 +282,7 @@ def build_response(res: Union[dict, list], res_cookies: RequestsCookieJar) -> Re
         # add status code
         status_code=res["status"],
         # add headers
-        headers=hrequests.client.CaseInsensitiveDict(res_headers),
+        headers=frequests.client.CaseInsensitiveDict(res_headers),
         # add cookies
         cookies=res_cookies,
         # add response body

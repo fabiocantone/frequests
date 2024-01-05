@@ -1,7 +1,8 @@
 <img src="https://i.imgur.com/r8GcQW1.png" align="center">
 </img>
 
-<h2 align="center">hrequests</h2>
+<h2 align="center">frequests</h2>
+<h3 align="center">A fork from Hrequests</h3>
 
 <h4 align="center">
 <p align="center">
@@ -24,7 +25,7 @@
         <img src="https://img.shields.io/badge/imports-isort-yellow.svg">
     </a>
 </p>
-    Hrequests (human requests) is a simple, configurable, feature-rich, replacement for the Python requests library. 
+    Frequests (human requests) is a simple, configurable, feature-rich, replacement for the Python requests library. 
 </h4>
 
 ### ✨ Features
@@ -62,14 +63,14 @@
 Install via pip:
 
 ```bash
-pip install -U hrequests[all]
+pip install -U frequests[all]
 python -m playwright install firefox chromium
 ```
 
 Other dependencies will be downloaded on the first import:
 
 ```py
->>> import hrequests
+>> > import frequests
 ```
 
 <details>
@@ -78,7 +79,7 @@ Other dependencies will be downloaded on the first import:
 **Ignore the `[all]` option if you don't want headless browsing support:**
 
 ```bash
-pip install -U hrequests
+pip install -U frequests
 ```
 
 </details>
@@ -102,7 +103,7 @@ pip install -U hrequests
 Here is an example of a simple `get` request:
 
 ```py
->>> resp = hrequests.get('https://www.google.com/')
+>>> resp = frequests.get('https://www.google.com/')
 ```
 
 Requests are sent through [bogdanfinn's tls-client](https://github.com/bogdanfinn/tls-client) to spoof the TLS client fingerprint. This is done automatically, and is completely transparent to the user.
@@ -129,10 +130,10 @@ Parameters:
     timeout (float, optional): Timeout in seconds. Defaults to 30.
     proxies (dict, optional): Dictionary of proxies. Defaults to None.
     nohup (bool, optional): Run the request in the background. Defaults to False.
-    <Additionally includes all parameters from `hrequests.Session` if a session was not specified>
+    <Additionally includes all parameters from `frequests.Session` if a session was not specified>
 
 Returns:
-    hrequests.response.Response: Response object
+    frequests.response.Response: Response object
 ```
 
 </details>
@@ -203,8 +204,8 @@ Get the response headers:
 Creating a new Chrome Session object:
 
 ```py
->>> session = hrequests.Session()  # version randomized by default
->>> session = hrequests.Session('chrome', version=117)
+>>> session = frequests.Session()  # version randomized by default
+>>> session = frequests.Session('chrome', version=117)
 ```
 
 <details>
@@ -234,8 +235,8 @@ Parameters:
 Browsers can also be created through the `firefox` and `chrome` shortcuts:
 
 ```py
->>> session = hrequests.firefox.Session()
->>> session = hrequests.chrome.Session()
+>>> session = frequests.firefox.Session()
+>>> session = frequests.chrome.Session()
 ```
 
 <details>
@@ -263,7 +264,7 @@ Parameters:
 `os` can be `'win'`, `'mac'`, or `'lin'`. Default is randomized.
 
 ```py
->>> session = hrequests.chrome.Session(os='mac')
+>>> session = frequests.chrome.Session(os='mac')
 ```
 
 This will automatically generate headers based on the browser name and OS:
@@ -284,7 +285,7 @@ By adding more randomization to our headers, we can make our requests appear to 
 
 ### Properties
 
-Here is a simple get request. This is a wrapper around `hrequests.get`. The only difference is that the session cookies are updated with each request. Creating sessions are recommended for making multiple requests to the same domain.
+Here is a simple get request. This is a wrapper around `frequests.get`. The only difference is that the session cookies are updated with each request. Creating sessions are recommended for making multiple requests to the same domain.
 
 ```py
 >>> resp = session.get('https://www.google.com/')
@@ -316,7 +317,7 @@ Sessions can also be closed to free memory:
 Alternatively, sessions can be used as context managers:
 
 ```py
-with hrequests.Session() as session:
+with frequests.Session() as session:
     resp = session.get('https://www.google.com/')
     print(resp)
 ```
@@ -332,8 +333,8 @@ Similar to Unix's nohup command, `nohup` requests are sent in the background.
 Adding the `nohup=True` keyword argument will return a `LazyTLSRequest` object. This will send the request immediately, but doesn't wait for the response to be ready until an attribute of the response is accessed.
 
 ```py
-resp1 = hrequests.get('https://www.google.com/', nohup=True)
-resp2 = hrequests.get('https://www.google.com/', nohup=True)
+resp1 = frequests.get('https://www.google.com/', nohup=True)
+resp2 = frequests.get('https://www.google.com/', nohup=True)
 ```
 
 `resp1` and `resp2` are sent concurrently. They will _never_ pause the current thread, unless an attribute of the response is accessed:
@@ -349,17 +350,17 @@ Note: In `nohup`, a new thread is created for each request. For larger scale con
 
 ### Easy Concurrency
 
-You can pass an array/iterator of links to the request methods to send them concurrently. This wraps around [`hrequests.map`](https://github.com/daijro/hrequests#map):
+You can pass an array/iterator of links to the request methods to send them concurrently. This wraps around [`frequests.map`](https://github.com/daijro/hrequests#map):
 
 ```py
->>> hrequests.get(['https://google.com/', 'https://github.com/'])
+>>> frequests.get(['https://google.com/', 'https://github.com/'])
 (<Response [200]>, <Response [200]>)
 ```
 
 This also works with `nohup`:
 
 ```py
->>> resps = hrequests.get(['https://google.com/', 'https://github.com/'], nohup=True)
+>>> resps = frequests.get(['https://google.com/', 'https://github.com/'], nohup=True)
 >>> resps
 (<LazyResponse[Pending]>, <LazyResponse[Pending]>)
 >>> # Sometime later...
@@ -388,15 +389,15 @@ Parameters:
     verify (bool, optional): Verify the server's TLS certificate. Defaults to True.
     timeout (float, optional): Timeout in seconds. Defaults to 30.
     proxies (dict, optional): Dictionary of proxies. Defaults to None.
-    <Additionally includes all parameters from `hrequests.Session` if a session was not specified>
+    <Additionally includes all parameters from `frequests.Session` if a session was not specified>
 
 Returns:
-    hrequests.response.Response: Response object
+    frequests.response.Response: Response object
 ```
 
 </details>
 
-Async requests are evaluated on `hrequests.map`, `hrequests.imap`, or `hrequests.imap_enum`.
+Async requests are evaluated on `frequests.map`, `frequests.imap`, or `frequests.imap_enum`.
 
 This functionality is similar to [grequests](https://github.com/spyoungtech/grequests). Unlike grequests, [monkey patching](https://www.gevent.org/api/gevent.monkey.html) is not required because this does not rely on the standard python SSL library.
 
@@ -404,9 +405,9 @@ Create a set of unsent Requests:
 
 ```py
 >>> reqs = [
-...     hrequests.async_get('https://www.google.com/', browser='firefox'),
-...     hrequests.async_get('https://www.duckduckgo.com/'),
-...     hrequests.async_get('https://www.yahoo.com/')
+...     frequests.async_get('https://www.google.com/', browser='firefox'),
+...     frequests.async_get('https://www.duckduckgo.com/'),
+...     frequests.async_get('https://www.yahoo.com/')
 ... ]
 ```
 
@@ -415,7 +416,7 @@ Create a set of unsent Requests:
 Send them all at the same time using map:
 
 ```py
->>> hrequests.map(reqs, size=3)
+>>> frequests.map(reqs, size=3)
 [<Response [200]>, <Response [200]>, <Response [200]>]
 ```
 
@@ -441,7 +442,7 @@ Returns:
 `imap` returns a generator that yields responses as they come in:
 
 ```py
->>> for resp in hrequests.imap(reqs, size=3):
+>>> for resp in frequests.imap(reqs, size=3):
 ...    print(resp)
 <Response [200]>
 <Response [200]>
@@ -468,7 +469,7 @@ Yields:
 `imap_enum` returns a generator that yields a tuple of `(index, response)` as they come in. The `index` is the index of the request in the original list:
 
 ```py
->>> for index, resp in hrequests.imap_enum(reqs, size=3):
+>>> for index, resp in frequests.imap_enum(reqs, size=3):
 ...     print(index, resp)
 (1, <Response [200]>)
 (0, <Response [200]>)
@@ -504,17 +505,17 @@ To handle timeouts or any other exception during the connection of the request, 
 ...    return f'Response failed: {exception}'
 
 >>> bad_reqs = [
-...     hrequests.async_get('http://httpbin.org/delay/5', timeout=1),
-...     hrequests.async_get('http://fakedomain/'),
-...     hrequests.async_get('http://example.com/'),
+...     frequests.async_get('http://httpbin.org/delay/5', timeout=1),
+...     frequests.async_get('http://fakedomain/'),
+...     frequests.async_get('http://example.com/'),
 ... ]
->>> hrequests.map(bad_reqs, size=3, exception_handler=exception_handler)
+>>> frequests.map(bad_reqs, size=3, exception_handler=exception_handler)
 ['Response failed: Connection error', 'Response failed: Connection error', <Response [200]>]
 ```
 
 The value returned by the exception handler will be used in place of the response in the result list.
 
-If an exception handler isn't specified, the default yield type is `hrequests.FailedResponse`.
+If an exception handler isn't specified, the default yield type is `frequests.FailedResponse`.
 
 <hr width=50>
 
@@ -673,7 +674,7 @@ Only Firefox supports CloudFlare WAFs.
 You can spawn a `BrowserSession` instance by calling it:
 
 ```py
->>> page = hrequests.BrowserSession()  # headless=True by default
+>>> page = frequests.BrowserSession()  # headless=True by default
 ```
 
 <details>
@@ -682,8 +683,8 @@ You can spawn a `BrowserSession` instance by calling it:
 ```
 Parameters:
     headless (bool, optional): Whether to run the browser in headless mode. Defaults to True.
-    session (hrequests.session.TLSSession, optional): Session to use for headers, cookies, etc.
-    resp (hrequests.response.Response, optional): Response to update with cookies, headers, etc.
+    session (frequests.session.TLSSession, optional): Session to use for headers, cookies, etc.
+    resp (frequests.response.Response, optional): Response to update with cookies, headers, etc.
     proxy_ip (str, optional): Proxy to use for the browser. Example: 123.123.123
     mock_human (bool, optional): Whether to emulate human behavior. Defaults to False.
     browser (Literal['firefox', 'chrome'], optional): Generate useragent headers for a specific browser
@@ -698,7 +699,7 @@ By default, `BrowserSession` returns a Chrome browser.
 To create a Firefox session, use the chrome shortcut instead:
 
 ```py
->>> page = hrequests.firefox.BrowserSession()
+>>> page = frequests.firefox.BrowserSession()
 ```
 
 `BrowserSession` is entirely safe to use across threads.
@@ -713,23 +714,23 @@ Once the page is closed, the Response content and the Response's session cookies
 
 Rendered browser sessions will use the browser set in the initial request.
 
-You can set a request's browser with the `browser` parameter in the `hrequests.get` method:
+You can set a request's browser with the `browser` parameter in the `frequests.get` method:
 
 ```py
->>> resp = hrequests.get('https://example.com', browser='chrome')
+>>> resp = frequests.get('https://example.com', browser='chrome')
 ```
 
-Or by setting the `browser` parameter of the `hrequests.Session` object:
+Or by setting the `browser` parameter of the `frequests.Session` object:
 
 ```py
->>> session = hrequests.Session(browser='chrome')
+>>> session = frequests.Session(browser='chrome')
 >>> resp = session.get('https://example.com')
 ```
 
 **Example - submitting a login form:**
 
 ```py
->>> session = hrequests.Session(browser='chrome')
+>>> session = frequests.Session(browser='chrome')
 >>> resp = session.get('https://www.somewebsite.com/')
 >>> with resp.render(mock_human=True) as page:
 ...     page.type('.input#username', 'myuser')
@@ -741,7 +742,7 @@ Or by setting the `browser` parameter of the `hrequests.Session` object:
 <summary><strong>Or, without a context manager</strong></summary>
 
 ```py
->>> session = hrequests.Session(browser='chrome')
+>>> session = frequests.Session(browser='chrome')
 >>> resp = session.get('https://www.somewebsite.com/')
 >>> page = resp.render(mock_human=True)
 >>> page.type('.input#username', 'myuser')
@@ -936,7 +937,7 @@ Parameters:
     check (bool, optional): Check if an element is draggable before running. Defaults to False.
 
 Throws:
-    hrequests.exceptions.BrowserTimeoutException: If timeout is reached
+    frequests.exceptions.BrowserTimeoutException: If timeout is reached
 ```
 
 </details>
@@ -991,7 +992,7 @@ Parameters:
     timeout (float, optional): Timeout in seconds. Defaults to 30.
 
 Throws:
-    hrequests.exceptions.BrowserTimeoutException: If timeout is reached
+    frequests.exceptions.BrowserTimeoutException: If timeout is reached
 ```
 
 </details>
@@ -1012,7 +1013,7 @@ Parameters:
     timeout (float, optional): Timeout in seconds. Defaults to 30.
 
 Throws:
-    hrequests.exceptions.BrowserTimeoutException: If timeout is reached
+    frequests.exceptions.BrowserTimeoutException: If timeout is reached
 ```
 
 </details>
@@ -1032,7 +1033,7 @@ Parameters:
     timeout (float, optional): Timeout in seconds. Defaults to 30.
 
 Throws:
-    hrequests.exceptions.BrowserTimeoutException: If timeout is reached
+    frequests.exceptions.BrowserTimeoutException: If timeout is reached
 ```
 
 </details>
@@ -1054,7 +1055,7 @@ Parameters:
     timeout (float, optional): Timeout in seconds. Defaults to 30.
 
 Throws:
-    hrequests.exceptions.BrowserTimeoutException: If timeout is reached
+    frequests.exceptions.BrowserTimeoutException: If timeout is reached
 ```
 
 </details>
@@ -1076,7 +1077,7 @@ Parameters:
     timeout (float, optional): Timeout in seconds. Defaults to 30.
 
 Throws:
-    hrequests.exceptions.BrowserTimeoutException: If timeout is reached
+    frequests.exceptions.BrowserTimeoutException: If timeout is reached
 ```
 
 </details>
@@ -1122,7 +1123,7 @@ If you plan on using Firefox-specific or Chrome-specific extensions, make sure t
 
 ```py
 # when dealing with captchas, make sure to use firefox
->>> resp = hrequests.get('https://accounts.hcaptcha.com/demo', browser='firefox')
+>>> resp = frequests.get('https://accounts.hcaptcha.com/demo', browser='firefox')
 ```
 
 Extensions are added with the `extensions` parameter:
@@ -1142,7 +1143,7 @@ Extensions are added with the `extensions` parameter:
 Here is an usage example of using a captcha solver:
 
 ```py
->>> resp = hrequests.get('https://accounts.hcaptcha.com/demo', browser='firefox')
+>>> resp = frequests.get('https://accounts.hcaptcha.com/demo', browser='firefox')
 >>> with resp.render(extensions=['C:\\extensions\\hektcaptcha']) as page:
 ...     page.awaitSelector('.hcaptcha-success')  # wait for captcha to finish
 ...     page.click('input[type=submit]')
@@ -1150,7 +1151,7 @@ Here is an usage example of using a captcha solver:
 
 ### Requests & Responses
 
-Requests can also be sent within browser sessions. These operate the same as the standard `hrequests.request`, and will use the browser's cookies and headers. The `BrowserSession` cookies will be updated with each request.
+Requests can also be sent within browser sessions. These operate the same as the standard `frequests.request`, and will use the browser's cookies and headers. The `BrowserSession` cookies will be updated with each request.
 
 This returns a normal `Response` object:
 
@@ -1174,10 +1175,10 @@ Parameters:
     max_redirects (int, optional): Maximum number of redirects to follow. Defaults to None.
 
 Throws:
-    hrequests.exceptions.BrowserTimeoutException: If timeout is reached
+    frequests.exceptions.BrowserTimeoutException: If timeout is reached
 
 Returns:
-    hrequests.response.Response: Response object
+    frequests.response.Response: Response object
 ```
 
 </details>
@@ -1218,7 +1219,7 @@ You can use `.render` to spawn a `BrowserSession` object directly from a url:
 # Using a Session:
 >>> page = session.render('https://google.com')
 # Or without a session at all:
->>> page = hrequests.render('https://google.com')
+>>> page = frequests.render('https://google.com')
 ```
 
 Make sure to close all `BrowserSession` objects when done!
