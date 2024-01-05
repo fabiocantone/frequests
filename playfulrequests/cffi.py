@@ -9,7 +9,6 @@ import rich.progress
 from httpx import get, stream
 from orjson import loads
 
-
 root_dir = os.path.abspath(os.path.dirname(__file__))
 
 # map machine architecture to playfulrequests-cgo binary name
@@ -85,10 +84,10 @@ class LibraryManager:
         with stream('GET', url, follow_redirects=True) as resp:
             total = int(resp.headers['Content-Length'])
             with rich.progress.Progress(
-                "[progress.percentage]{task.percentage:>3.0f}%",
-                rich.progress.BarColumn(bar_width=40),
-                rich.progress.DownloadColumn(),
-                rich.progress.TransferSpeedColumn(),
+                    "[progress.percentage]{task.percentage:>3.0f}%",
+                    rich.progress.BarColumn(bar_width=40),
+                    rich.progress.DownloadColumn(),
+                    rich.progress.TransferSpeedColumn(),
             ) as progress:
                 download_task = progress.add_task("Download", total=total)
                 for chunk in resp.iter_bytes():
@@ -106,7 +105,6 @@ def GetOpenPort() -> int:
 
 
 class GoString(ctypes.Structure):
-    # wrapper around Go's string type
     _fields_ = [("p", ctypes.c_char_p), ("n", ctypes.c_longlong)]
 
 
@@ -116,9 +114,18 @@ libman = LibraryManager()
 library = ctypes.cdll.LoadLibrary(libman.full_path)
 del libman
 
-# extract the exposed destroySession function
+# Define the argument and return types for exported Go functions
+library.StartServer.argtypes = [GoString]
+library.StartServer.restype = ctypes.c_void_p
+
 library.DestroySession.argtypes = [GoString]
 library.DestroySession.restype = ctypes.c_void_p
+
+
+def start_server(port: int):
+    encoded_port = str(port).encode('utf-8')
+    go_string_port = GoString(encoded_port, len(encoded_port))
+    library.StartServer(go_string_port)
 
 
 def destroySession(session_id: str):
@@ -126,14 +133,9 @@ def destroySession(session_id: str):
     library.DestroySession(GoString(encoded_session_id, len(encoded_session_id)))
 
 
-# spawn the server
+# Get an open port and start the server
 PORT = GetOpenPort()
-library.StartServer.argtypes = [GoString]
-
-
-def start_server():
-    encoded_port = str(PORT).encode('utf-8')
-    library.StartServer(GoString(encoded_port, len(encoded_port)))
-
+print(f"Starting server on port {PORT}")
+start_server(PORT)
 
 start_server()

@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "PlayfulRequests"
-version = "0.8.5-beta"
+version = "0.8.6-beta"
 description = "PlayfulRequests (human requests) is a simple, configurable, feature-rich, replacement for the Python requests library. This is a fork of hrequests."
 authors = ["fabiocan <fabio@cantone.me>"]
 license = "Apache-2.0"
