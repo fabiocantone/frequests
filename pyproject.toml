@@ -10,7 +10,6 @@ authors = ["fabiocantone <fabio@cantone.me>"]
 license = "Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/fabiocantone/frequests"
-documentation = "https://daijro.gitbook.io/hrequests/"
 keywords = [
     "tls",
     "client",
