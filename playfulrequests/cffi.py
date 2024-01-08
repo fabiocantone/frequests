@@ -4,6 +4,7 @@ import socket
 from platform import machine
 from sys import platform
 from typing import Tuple
+from time import sleep
 
 import rich.progress
 from httpx import get, stream
@@ -124,8 +125,8 @@ library.DestroySession.restype = ctypes.c_void_p
 
 def start_server(port: int):
     encoded_port = str(port).encode('utf-8')
-    go_string_port = GoString(encoded_port, len(encoded_port))
-    library.StartServer(go_string_port)
+    sleep(5)
+    library.StartServer(str(port))
 
 
 def destroy_session(session_id: str):
